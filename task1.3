@@ -1,0 +1,47 @@
+void setup()
+{
+  Serial.begin(9600);
+  // Pins
+  pinMode(3, INPUT);
+  pinMode(2, INPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(9, OUTPUT);
+  //interrupts
+  attachInterrupt (digitalPinToInterrupt(2), pressButne, CHANGE); // when the user press the butm
+  attachInterrupt (digitalPinToInterrupt(3), changedMove, CHANGE);//  when the motion is 1
+  
+}
+
+
+void loop()
+{
+  int move = digitalRead(3); // read data from senser
+  String Minfo = "motion value: ";
+  
+  
+  
+  String printMInfo = Minfo + move;
+  Serial.println(printMInfo);
+  digitalWrite(LED_BUILTIN,move);
+  delay(1000); // Wait for 1000 millisecond(s)
+}
+
+//SIGNAL(TIMER0_COMPA_vect){
+//digitalWrite(LED_BUILTIN,LOW);
+//}
+
+void changedMove(){
+digitalWrite(LED_BUILTIN,digitalRead(3));
+}
+
+void pressButne(){
+
+digitalWrite(9,digitalRead(2));
+  // read the input on analog pin 0:
+  int sensorValue = analogRead(A0);
+  // print out the value you read:
+  String Sinfo = "how far: ";
+  String printSInfo = Sinfo + sensorValue;
+  Serial.println(printSInfo);
+  delay(1000);        // delay in between reads for stability
+}
