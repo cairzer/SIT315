@@ -1,0 +1,37 @@
+void setup()
+{
+  Serial.begin(9600);
+  // Pins
+  pinMode(3, INPUT);
+  pinMode(2, INPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+  //interrupts
+  attachInterrupt (digitalPinToInterrupt(2), pressButne, CHANGE); // when the user press the butm
+  attachInterrupt (digitalPinToInterrupt(3), changedMove, CHANGE);//  when the motion is 1
+  
+}
+
+
+void loop()
+{
+  int move = digitalRead(3); // read data from senser
+  String info = "motion value: ";
+  String printInfo = info + move;
+  Serial.println(printInfo);
+  digitalWrite(LED_BUILTIN,move);
+  delay(1000); // Wait for 1000 millisecond(s)
+}
+
+
+void changedMove(){
+digitalWrite(LED_BUILTIN,digitalRead(3));
+}
+
+void pressButne(){
+digitalWrite(LED_BUILTIN,digitalRead(2));
+}
+
+
+
+
+
